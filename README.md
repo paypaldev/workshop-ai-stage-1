@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Procedural Avatar Maker
+
+A demo app showing procedural generation — type any name and get a unique, deterministic character with a generated SVG avatar.
+
+## How it works
+
+The character is generated entirely from the input name, with no randomness:
+
+1. The name is hashed into a numeric seed using FNV-1a
+2. That seed drives a stateful PRNG ([lib/seededRandom.ts](lib/seededRandom.ts))
+3. The PRNG picks a colour palette, job, mood, eye size, and accessory from fixed lists
+4. The [Avatar component](components/Avatar.tsx) renders the character as an inline SVG
+
+The same name always produces the same character. Change one letter and you get a completely different one.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) and type a name into the input field.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+app/page.tsx          — main page, input field and character data display
+components/Avatar.tsx — SVG avatar renderer
+lib/seededRandom.ts   — hash + PRNG + character generation logic
+```
